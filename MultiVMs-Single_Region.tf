@@ -13,7 +13,7 @@ resource "azurerm_resource_group" "test" {
     location        = "${var.deployregion}"
 
     tags = {
-        environment = "EVK Terraform Demo"
+        environment = "Terraform Demo"
     }
 }
 
@@ -44,7 +44,7 @@ resource "azurerm_public_ip" "test" {
   location        = "${var.deployregion}"
   resource_group_name = "${azurerm_resource_group.test.name}"
   allocation_method   = "Static"
-  domain_name_label = "evktest007"
+  domain_name_label = "test007"
 }
 output "elbpublic_ip_address" {
   value = "${azurerm_public_ip.test.*.ip_address}"
@@ -139,7 +139,7 @@ resource "azurerm_network_security_group" "test" {
     }
 
     tags = {
-        environment = "EVK Terraform Demo"
+        environment = "Terraform Demo"
     }
 }
 resource "azurerm_network_interface" "test" {
@@ -176,12 +176,12 @@ resource "azurerm_storage_account" "test" {
   account_replication_type = "LRS"
 
   tags = {
-        environment = "EVK Terraform Demo"
-        owner       = "evksg"
+        environment = "Terraform Demo"
+        owner       = "sg"
     }
 }
 resource "azurerm_storage_container" "test" {
-  name            = "${lower(var.prefix)}-evkvhds"
+  name            = "${lower(var.prefix)}-vhds"
   resource_group_name = "${azurerm_resource_group.test.name}"
   storage_account_name  = "${azurerm_storage_account.test.name}"
   container_access_type = "private"
@@ -238,7 +238,7 @@ resource "azurerm_virtual_machine" "test" {
   os_profile {
     computer_name  = "${var.prefix}-vm${count.index}"
     admin_username = "testadmin"
-    admin_password = "plokij@12345"
+    admin_password = "passw@12345"
   }
   os_profile_linux_config {
     disable_password_authentication = false
@@ -255,7 +255,3 @@ output "Virtual_Network_Name" {
   }
   output "Virtual_Network_AddressSpace_Details" {
       value = "${azurerm_virtual_network.test.*.address_space}"
-  }
-  output "website_Browse" {
-  value = "www.evktest007.xyz"
-}
